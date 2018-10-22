@@ -31,7 +31,7 @@
 
             _bus = MassTransit.Bus.Factory.CreateUsingRabbitMq(x =>
             {
-                x.Host(new Uri(ConfigurationManager.AppSettings["RabbitMQHost"]), h =>
+                x.Host(new Uri(ConfigurationManager.AppSettings["RabbitMQHost"]),  h =>
                 {
                     h.Username("guest");
                     h.Password("guest");

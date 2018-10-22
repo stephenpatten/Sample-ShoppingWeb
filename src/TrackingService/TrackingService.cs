@@ -107,7 +107,7 @@
         static IScheduler CreateScheduler()
         {
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();            
-            IScheduler scheduler = MassTransit.Util.TaskUtil.Await<IScheduler>(() => schedulerFactory.GetScheduler()); ;
+            IScheduler scheduler = MassTransit.Util.TaskUtil.Await<IScheduler>(() => schedulerFactory.GetScheduler()); 
 
             return scheduler;
         }
