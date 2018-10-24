@@ -30,21 +30,25 @@
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             _bus = MassTransit.Bus.Factory.CreateUsingRabbitMq(x =>
-            {
-                x.Host(new Uri(ConfigurationManager.AppSettings["RabbitMQHost"]),  h =>
                 {
-                    h.Username("guest");
-                    h.Password("guest");
+                    x.Host(
+                        new Uri("rabbitmq://localhost/shoppingcart"),
+                        h =>
+                            {
+                                h.Username("shoppingcart");
+                                h.Password("shoppingcart");
+                            });
                 });
-            });
 
-            _busHandle = MassTransit.Util.TaskUtil.Await<BusHandle>(()=>_bus.StartAsync());
+            _busHandle = MassTransit.Util.TaskUtil.Await<BusHandle>(() => _bus.StartAsync());
         }
 
         protected void Application_End()
         {
             if (_busHandle != null)
+            {
                 _busHandle.Stop(TimeSpan.FromSeconds(30));
+            }
         }
     }
 }

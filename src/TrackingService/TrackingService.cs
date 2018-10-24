@@ -46,12 +46,14 @@
                 () => new EntityFrameworkSagaRepository<ShoppingCart>(sagaDbContextFactory));
 
             _busControl = Bus.Factory.CreateUsingRabbitMq(x =>
-            {
-                IRabbitMqHost host = x.Host(new Uri(ConfigurationManager.AppSettings["RabbitMQHost"]), h =>
                 {
-                    h.Username("guest");
-                    h.Password("guest");
-                });
+                    IRabbitMqHost host = x.Host(
+                        new Uri("rabbitmq://localhost/shoppingcart"),
+                        h =>
+                            {
+                                h.Username("shoppingcart");
+                                h.Password("shoppingcart");
+                            });
 
                 x.ReceiveEndpoint(host, "shopping_cart_state", e =>
                 {
